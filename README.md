@@ -114,6 +114,18 @@ Decision: do not copy a full public repo. Use the proven markdown-vault/self-cur
 - `scripts/scaffold-brain.sh` — local scaffolder
 - `docs/maintenance-loop.md` — weekly review and pruning loop
 - `docs/gbrain-integration.md` — recommended GBrain relationship
+- `docs/test-plan.md` — layered validation plan
+- `examples/simulation-prompts.md` — behavior simulation prompts
+
+## Testing
+
+Run deterministic scaffold/static checks:
+
+```bash
+./scripts/test-template.sh
+```
+
+Then use `examples/simulation-prompts.md` for agent-behavior testing and `docs/test-plan.md` for GBrain/contamination acceptance.
 
 ## License
 
