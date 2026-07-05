@@ -1,12 +1,23 @@
 # Agent Second Brain Template
 
-A portable, per-agent/per-customer memory scaffold for AI agents.
+A customer-agent adaptation of Andrej Karpathy's **LLM Wiki** pattern: raw sources stay immutable, the agent maintains a clean Markdown brain/wiki, and GBrain indexes that curated layer for source-pinned recall.
 
-This is intentionally boring: plain Markdown, per-customer isolation, hard approval gates, source handles, and a maintenance loop. It borrows the best public pattern from popular AI/Obsidian second-brain repos — especially Eugeniu Ghelbur's MIT-licensed `obsidian-second-brain` idea of an AI-maintained vault — but trims it down for customer agents where privacy, auditability, and live-action boundaries matter more than 40+ commands.
+This is intentionally boring: plain Markdown, per-customer isolation, hard approval gates, source handles, and a maintenance loop. It borrows the public AI-maintained-vault idea from Karpathy's LLM Wiki and popular Obsidian second-brain repos, then trims it down for customer agents where privacy, auditability, and live-action boundaries matter more than a pile of commands.
 
-The goal: every customer agent gets a clean local `brain/` directory it can read, curate, prune, and sync/index into GBrain. Markdown is the source notebook. GBrain is the retrieval engine.
+The goal: every customer agent gets a clean local `brain/` directory it can read, curate, prune, and sync/index into GBrain. Markdown is the compiled source notebook. GBrain is the retrieval engine.
 
 ## Default architecture
+
+Karpathy's pattern has three main layers: raw sources, a maintained wiki, and a schema/instruction file. Our customer-agent version adds GBrain as the retrieval/index layer over the maintained wiki.
+
+```text
+Raw sources        -> immutable evidence
+./brain/ markdown  -> agent-maintained operating wiki
+Schema/prompt      -> rules for maintaining the wiki
+GBrain             -> retrieval/index over the wiki + approved sources
+```
+
+Operationally:
 
 ```text
 Customer Agent
@@ -98,14 +109,20 @@ Use this as the clean source layer. Then sync/index `brain/` into an isolated pe
 
 ## Public repo research note
 
-Checked popular GitHub candidates before shaping this:
+Checked Karpathy's LLM Wiki gist and popular GitHub second-brain candidates before shaping this.
 
-- `eugeniughelbur/obsidian-second-brain` — ~2.9k stars, MIT, strong AI-maintained vault concept. Best inspiration, but too broad/heavy for customer-agent provisioning.
+Key source pattern:
+
+- Andrej Karpathy's `LLM Wiki` gist — 5k+ stars/forks shown on GitHub gist page; the core pattern is raw sources -> LLM-maintained Markdown wiki -> schema/instructions. Strongest conceptual fit.
+
+Popular implementation/reference repos found:
+
+- `eugeniughelbur/obsidian-second-brain` — ~2.9k stars, MIT, strong AI-maintained vault concept. Best public implementation inspiration, but too broad/heavy for customer-agent provisioning.
 - `coleam00/second-brain-starter` — ~650 stars, good PRD/memory layer ideas, no detected license from GitHub API.
 - `voidashi/obsidian-vault-template` — ~300 stars, MIT, useful Obsidian/PARA-ish vault starter.
 - `smixs/agent-second-brain` — ~290 stars, MIT, voice-to-Obsidian agent pattern.
 
-Decision: do not copy a full public repo. Use the proven markdown-vault/self-curation pattern, then make a lean customer-agent-specific scaffold with stronger constraints, access hygiene, and GBrain integration.
+Decision: do not copy a full public repo. Use the proven LLM Wiki / markdown-vault self-curation pattern, then make a lean customer-agent-specific scaffold with stronger constraints, access hygiene, source handles, contamination tests, and GBrain integration.
 
 ## Files
 
@@ -114,6 +131,7 @@ Decision: do not copy a full public repo. Use the proven markdown-vault/self-cur
 - `scripts/scaffold-brain.sh` — local scaffolder
 - `docs/maintenance-loop.md` — weekly review and pruning loop
 - `docs/gbrain-integration.md` — recommended GBrain relationship
+- `docs/architecture.md` — Karpathy LLM Wiki mapping for customer agents
 - `docs/test-plan.md` — layered validation plan
 - `examples/simulation-prompts.md` — behavior simulation prompts
 
