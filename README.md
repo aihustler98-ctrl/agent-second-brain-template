@@ -66,6 +66,22 @@ brain/
 
 This creates `/path/to/agent/workspace/brain/` from `templates/brain/`.
 
+## Test the maintenance rules
+
+Run the static template checks:
+
+```bash
+./scripts/test-template.sh
+```
+
+Run the accelerated behavior simulation:
+
+```bash
+./scripts/pilot-accelerated-test.py
+```
+
+The accelerated test creates isolated throwaway brains under `/tmp/agent-second-brain-accelerated-pilot/`, simulates representative memory-maintenance events, and verifies that facts, decisions, access metadata, logs, untrusted content, and customer isolation are handled correctly.
+
 ## Add the agent prompt block
 
 Paste `prompts/second-brain-system-block.md` into the agent's operating instructions/system prompt.

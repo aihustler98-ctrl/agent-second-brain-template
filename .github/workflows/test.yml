@@ -1,0 +1,19 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  template-and-pilot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run template validation
+        run: ./scripts/test-template.sh
+
+      - name: Run accelerated pilot simulation
+        run: ./scripts/pilot-accelerated-test.py
